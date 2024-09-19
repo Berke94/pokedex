@@ -13,13 +13,14 @@ class Feature extends Model
 
     ];
 
+
     public function types()
     {
-        return $this->belongsToMany(Pokemon::class, 'pokemon_type');
+        return $this->belongsToMany(Pokemon::class, 'pokemon_type', 'feature_id', 'pokemon_id');
     }
 
     public function weaknesses()
     {
-        return $this->belongsToMany(Pokemon::class, 'pokemon_weakness');
+        return $this->belongsToMany(Pokemon::class, 'pokemon_weakness', 'feature_id', 'pokemon_id');
     }
 }

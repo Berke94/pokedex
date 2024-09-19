@@ -13,18 +13,19 @@ class Pokemon extends Model
 
     ];
 
+
     public function abilities()
     {
-        return $this->belongsToMany(Ability::class, 'pokemon_abilities');
+        return $this->belongsToMany(Ability::class, 'pokemon_ability', 'pokemon_id', 'ability_id');
     }
 
     public function types()
     {
-        return $this->belongsToMany(Feature::class, 'pokemon_type');
+        return $this->belongsToMany(Feature::class, 'pokemon_type', 'pokemon_id', 'feature_id');
     }
 
     public function weaknesses()
     {
-        return $this->belongsToMany(Feature::class, 'pokemon_weakness');
+        return $this->belongsToMany(Feature::class, 'pokemon_weakness', 'pokemon_id', 'feature_id');
     }
 }

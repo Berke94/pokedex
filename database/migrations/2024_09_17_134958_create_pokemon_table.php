@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pokemons', function (Blueprint $table) {
+        Schema::create('pokemon', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
+            $table->string('number')->unique();
             $table->string('name');
-            $table->text('information');
             $table->string('height');
             $table->float('weight');
-            $table->string('category');
-            $table->tinyInteger('gender');
             $table->string('thumbnail_alt_text');
             $table->string('thumbnail_image');
             $table->timestamps();

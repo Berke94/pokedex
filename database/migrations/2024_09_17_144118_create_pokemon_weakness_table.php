@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pokemon_weakness', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pokemon_id')->constrained('pokemons')->onDelete('cascade');
-            $table->foreignId('feature_id')->constrained('features')->onDelete('cascade');
+            $table->foreignId('pokemon_id')->constrained()->onDelete('cascade');
+            $table->foreignId('feature_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -9,18 +9,18 @@ class Feature extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-
+    protected $fillable = [
+        'name'
     ];
 
-
-    public function types()
+    public function pokemonsAsType()
     {
-        return $this->belongsToMany(Pokemon::class, 'pokemon_type', 'feature_id', 'pokemon_id');
+        return $this->belongsToMany(Pokemon::class, 'type_pokemon');
     }
 
-    public function weaknesses()
+    public function pokemonsAsWeakness()
     {
-        return $this->belongsToMany(Pokemon::class, 'pokemon_weakness', 'feature_id', 'pokemon_id');
+        return $this->belongsToMany(Pokemon::class, 'weakness_pokemon');
     }
+
 }

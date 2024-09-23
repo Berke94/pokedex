@@ -9,23 +9,29 @@ class Pokemon extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-
+    protected $table = 'pokemons';
+    protected $fillable = [
+        'number',
+        'name',
+        'height',
+        'weight',
+        'thumbnail_alt_text',
+        'thumbnail_image',
     ];
-
 
     public function abilities()
     {
-        return $this->belongsToMany(Ability::class, 'pokemon_ability', 'pokemon_id', 'ability_id');
+        return $this->belongsToMany(Ability::class, 'ability_pokemon');
     }
 
     public function types()
     {
-        return $this->belongsToMany(Feature::class, 'pokemon_type', 'pokemon_id', 'feature_id');
+        return $this->belongsToMany(Feature::class, 'type_pokemon');
     }
 
     public function weaknesses()
     {
-        return $this->belongsToMany(Feature::class, 'pokemon_weakness', 'pokemon_id', 'feature_id');
+        return $this->belongsToMany(Feature::class, 'weakness_pokemon');
     }
+
 }

@@ -9,13 +9,12 @@ class Ability extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-
+    protected $fillable = [
+        'name',
     ];
-
 
     public function pokemons()
     {
-        return $this->belongsToMany(Pokemon::class, 'pokemon_ability', 'ability_id', 'pokemon_id');
+        return $this->belongsToMany(Pokemon::class, 'ability_pokemon');
     }
 }

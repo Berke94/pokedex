@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('pokemons', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
+            $table->string('number')->unique();
             $table->string('name');
             $table->float('height');
             $table->float('weight');

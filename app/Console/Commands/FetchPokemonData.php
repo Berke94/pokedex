@@ -26,40 +26,43 @@ class FetchPokemonData extends Command
 
             $totalPokemons = count($pokemons);
 
-            $this->output->progressStart($totalPokemons);
+            //$this->output->progressStart($totalPokemons);
 
             foreach ($pokemons as $pokemonData) {
-                $pokemon = Pokemon::create([
-                    'number' => $pokemonData['number'],
-                    'name' => $pokemonData['name'],
-                    'height' => $pokemonData['height'],
-                    'weight' => $pokemonData['weight'],
-                    'thumbnail_alt_text' => $pokemonData['ThumbnailAltText'],
-                    'thumbnail_image' => $pokemonData['ThumbnailImage'],
-                ]);
+                $isExist = Pokemon::where('number', $pokemonData['number'])->exists();
+                if (!$isExist) {
+                    $pokemon = Pokemon::create([
+                        'number' => $pokemonData['number'],
+                        'name' => $pokemonData['name'],
+                        'height' => $pokemonData['height'],
+                        'weight' => $pokemonData['weight'],
+                        'thumbnail_alt_text' => $pokemonData['ThumbnailAltText'],
+                        'thumbnail_image' => $pokemonData['ThumbnailImage'],
+                    ]);
 
-                foreach ($pokemonData['abilities'] as $abilityName) {
-                    $ability = Ability::firstOrCreate(['name' => $abilityName]);
-                    $pokemon->abilities()->attach($ability);
+                    foreach ($pokemonData['abilities'] as $abilityName) {
+                        $ability = Ability::firstOrCreate(['name' => $abilityName]);
+                        $pokemon->abilities()->attach($ability);
+                    }
+
+                    foreach ($pokemonData['type'] as $typeName) {
+                        $feature = Feature::firstOrCreate(['name' => $typeName]);
+                        $pokemon->types()->attach($feature);
+                    }
+
+                    foreach ($pokemonData['weakness'] as $weaknessName) {
+                        $feature = Feature::firstOrCreate(['name' => $weaknessName]);
+                        $pokemon->weaknesses()->attach($feature);
+                    }
+
+                   // $this->output->progressAdvance();
+
+                    $this->info("{$pokemonData['name']} isimli pokemon sisteme eklendi.");
+
                 }
-
-                foreach ($pokemonData['type'] as $typeName) {
-                    $feature = Feature::firstOrCreate(['name' => $typeName]);
-                    $pokemon->types()->attach($feature);
-                }
-
-                foreach ($pokemonData['weakness'] as $weaknessName) {
-                    $feature = Feature::firstOrCreate(['name' => $weaknessName]);
-                    $pokemon->weaknesses()->attach($feature);
-                }
-
-                $this->output->progressAdvance();
-
-                $this->info("{$pokemonData['name']} isimli pokemon sisteme eklendi.");
-
+                //$this->output->progressFinish();
+                $this->info('Pokemonlar kaydedildi');
             }
-            $this->output->progressFinish();
-            $this->info('Pokemonlar kaydedildi');
         }
     }
 }
